@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+<h2>Походы</h2>
+
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Руководитель</th>
+            <th scope="col">Тип похода</th>
+            <th scope="col">Район</th>
+            <th scope="col">Сроки</th>
+            <th scope="col">Школа</th>
+            <th scope="col">О походе</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for key, group in grouped_hikes %}
+              <tr>
+                <th scope="row" colspan="6" class="text-center table-light">{{ key }} к/с</th>                
+              </tr>
+              {% for hike in group %}
+                <tr>
+                    <th scope="row">{{ hike.leader.last_name }} {{ hike.leader.first_name }}</th>
+                    <td>{{ hike.type }}</td>
+                    <td>{{ hike.region }}</td>
+                    <td>{{ hike.start_date }}</td>
+                    <td>-</td>
+                    <td>
+                        <a href="{% url 'hike_detail' hike.pk %}" class="btn btn-primary">
+                            Подробнее
+                        </a>
+                    </td>
+                </tr>
+              {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

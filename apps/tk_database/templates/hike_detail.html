@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+<div class="row">
+    <div class="column left col-md-8">
+        <section class="section summary-section">
+            <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>{{hike.title}}</h2>
+            <div class="summary">
+                <p>Вид похода: {{ hike.type}}</p>
+                <p>Категория похода: {{ hike.category}}</p>
+                <p>Район: {{ hike.region }}</p>
+                <p>Сроки: {{ hike.start_date }} - {{ hike.end_date}}</p>
+                <p>Маршрут:</p>
+            </div>
+        </section>
+    
+        <section class="section summary-section">
+            <h2 class="section-title"><span class="icon-holder"><i class="fa-solid fa-user"></i></span>О походе</h2>
+            <div class="summary">
+                {{ hike.description }}
+            </div><!--//summary-->
+        </section><!--//section-->
+    </div>
+    <div class="column left col-md-4 leader-details">
+        <div class="avatar d-md-flex justify-content-center">
+            <div>
+            <img src="https://sun1-56.userapi.com/s/v1/if1/xIXYHcLmQnSE4RXkYbgAGohzztNYaQOuBuUnTMh0QgSZy5KNsIKWPkLJV6nfMXrolNPGfHQQ.jpg?size=400x400&quality=96&crop=121,35,1267,1267&ava=1" 
+            class="rounded-circle img-fluid" alt="{{ leader.first_name}} {{ leader.last_name }}">
+            </div>
+        </div>
+        <h1 class="name">{{ leader.first_name}} {{ leader.last_name }}</h1>
+        <h3 class="tagline">5ПР, 4ГУ [TODO]</h3>
+
+        <ul class="list-unstyled contact-list">
+            <li class="email"><i class="fa-solid fa-envelope"></i><a href="mailto: {{ leader.email }}">{{ leader.email }}</a></li>
+            {% if leader.profile.phone_mobile is not None %}
+            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.profile.phone_mobile }}">{{ leader.profile.phone_mobile }}</a></li>
+            {% endif %}
+            {% if leader.profile.phone_home is not None %}
+            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.profile.phone_home }}">{{ leader.profile.phone_home }}</a></li>
+            {% endif %}
+        </ul>
+
+        {% if user.id == leader.id %}
+        <a href="{% url 'hike_edit' hike.pk %}" class="btn btn-primary">
+            Редактировать
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+<!-- <h1>{{ hike.title }}</h1>
+<div class="row">
+    <div class="col-md-8 float-right">
+        <img src="{% static hike.image %}" alt="" width="100%">
+    </div>
+    <div class="col-md-4">
+        <h5>About the hike:</h5>
+        <p>{{ hike.description }}</p>
+        <br>
+        <h5>Hike type:</h5>
+        <p>{{ hike.type }}</p>
+    </div>
+</div> -->
+{% endblock %}

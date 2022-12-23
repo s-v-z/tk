@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/assets/css/site.css">
+
+<div class="wrap">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+          <a class="navbar-brand" href="{% url 'hike_index' %}">Турклуб АЗАЗА</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'hike_index' %}">Походы</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'hike_index' %}">Люди</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{#% url 'blog_index' %}">Библиотека</a>
+              </li>
+            </ul>
+          </div>
+      </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="column left col-md-2">
+        <p><a href="/user/{{ user.id }}">Моя страница</a>                
+          <a class="no_underline" href="/user/update"><span class="small"><i class="fa-0.5x icon-cog" style="color: #DDD;"></i> </span></a>
+        </p>
+        <p><a href="/user/{{ user.id }}/hikes">Мои объявления</a></p>
+        <p><a href="/user/{{ user.id }}/hikes">Мои походы</a></p>
+        
+        <p>
+          <a href="{% url 'hike_new' %}" class="btn btn-primary">
+            Добавить поход
+          </a>
+        </p>
+      </div>
+
+      <div class="column main col-md-10">
+        {% block page_content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">      
+      <p class="pull-left links">
+          <a href="/contact" class="pl-1">Контакты</a>
+          <a href="/page/about" class="pl-1">О клубе</a>
+          <a href="/page/useful" class="pl-1">Полезное</a>
+          <!-- <p class="pull-right">© 2022 <a href="/user/...">Сергей Загориняк</a><br> -->
+      </p>
+  </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
