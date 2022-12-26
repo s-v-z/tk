@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.tk_database.urls')),
+    path('user/', include('django.contrib.auth.urls')),
 ]

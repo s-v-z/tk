@@ -23,12 +23,12 @@ class InstructorCategory(models.TextChoices):
 
 class HikeCategory(models.IntegerChoices):
     CAT_0 = 0, 'н/к'
-    CAT_1 = 1, 'Первая'
-    CAT_2 = 2, 'Вторая'
-    CAT_3 = 3, 'Третья'
-    CAT_4 = 4, 'Четвертая'
-    CAT_5 = 5, 'Пятая'
-    CAT_6 = 6, 'Шестая'
+    CAT_1 = 1, '1 к.с.'
+    CAT_2 = 2, '2 к.с.'
+    CAT_3 = 3, '3 к.с.'
+    CAT_4 = 4, '4 к.с.'
+    CAT_5 = 5, '5 к.с.'
+    CAT_6 = 6, '6 к.с.'
 
 class HikeSubCategory(models.IntegerChoices):
     SUB_1 = 1, 'с эл. 1'
@@ -76,6 +76,11 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+class ModelActiveManager(models.Manager):
+    '''По умолчанию выбирает только записи без отметки "Удалено"'''
+    def get_queryset(self):
+        return super(ModelActiveManager, self).get_queryset().filter(is_deleted=False)
+
 class Hike(models.Model):
     type            = models.ForeignKey(HikeType, on_delete=models.RESTRICT)
     category        = models.IntegerField(choices=HikeCategory.choices, default=None)
@@ -92,7 +97,10 @@ class Hike(models.Model):
     is_private      = models.BooleanField()
     is_full         = models.BooleanField()
     is_deleted      = models.BooleanField(default=False)
-    
+
+    objects = ModelActiveManager()
+    objects_all = models.Manager()
+
     def __str__(self):
         return self.type.name + ' ' + str(self.category) + ' ' + self.region.name + ' ' + self.title
 

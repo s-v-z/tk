@@ -13,7 +13,7 @@ class HikeForm(ModelForm):
         widgets = {
             # TODO: разобраться с форматом даты в инпуте. сейчас он почему-то игнорируется.
             'start_date': DateInput(format='%Y-%m-%d', attrs={'class':'form-control', 'placeholder':'Выберите дату', 'type':'date'}),
-            'end_date': DateInput(format='АЗАЗА', attrs={'class':'form-control', 'placeholder':'Выберите дату', 'type':'date'}),
+            'end_date': DateInput(format='%Y-%m-%d', attrs={'class':'form-control', 'placeholder':'Выберите дату', 'type':'date'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -37,6 +37,10 @@ class HikeForm(ModelForm):
         self.fields['is_completed'].label = 'Поход завершён'
         self.fields['is_private'].label = 'Не отображать в списке походов'
         self.fields['is_full'].label = 'Группа набрана'
+
+        for field in self.fields.values():
+            if field.required:
+                field.error_messages = {'required': 'Это поле обязательное'}
 
         self.helper.form_id = f"id-hike-{action}-form"
         self.helper.form_class = f"hike-{action}-class"

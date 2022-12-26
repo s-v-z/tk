@@ -1,16 +1,21 @@
+{% load static %}
+
 <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
+<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/static/assets/css/site.css">
 <link rel="shortcut icon" href="/static/assets/favicon.png"/>
 
 <div class="wrap">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-light navbar-expand-lg bg-light">
       <div class="container">
           <a class="navbar-brand" href="{% url 'hikes_list' %}">Турклуб АЗАЗА</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse navbar-left" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'hikes_list' %}">Походы</a>
@@ -21,7 +26,21 @@
               <li class="nav-item">
                 <a class="nav-link" href="{#% url 'blog_index' %}">Библиотека</a>
               </li>
-            </ul>
+            </ul>            
+          </div>
+
+          <div class="collapse navbar-collapse navbar-left" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'hikes_list' %}">Походы</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'hikes_list' %}">Люди</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>  Выход</a>
+              </li>
+            </ul>            
           </div>
       </div>
   </nav>

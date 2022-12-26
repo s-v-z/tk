@@ -13,7 +13,7 @@ from apps.tk_database.forms import HikeForm, DeleteConfirmationForm
 log = logging.getLogger(__name__)
 
 # TODO: improve view
-def user_hikes(request, user_id):    
+def user_hikes(request, user_id):
     hikes = Hike.objects.order_by('category','start_date').select_related('leader').filter(Q(leader_id=user_id)) # TODO: filter by hike member
 
     context = {
@@ -91,7 +91,9 @@ class DeleteHikeView(DeleteView):
     def form_valid(self, form):
         if self.request.user.id != self.object.leader.id:
             raise PermissionDenied("Вы не можете удалить чужой поход")
+        
         success_url = reverse('hikes_list')
         self.object.is_deleted = True
+        self.object.members_set = []
         self.object.save()
         return HttpResponseRedirect(success_url)
