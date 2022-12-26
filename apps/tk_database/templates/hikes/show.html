@@ -26,26 +26,33 @@
         <div class="avatar d-md-flex justify-content-center">
             <div>
             <img src="https://sun1-56.userapi.com/s/v1/if1/xIXYHcLmQnSE4RXkYbgAGohzztNYaQOuBuUnTMh0QgSZy5KNsIKWPkLJV6nfMXrolNPGfHQQ.jpg?size=400x400&quality=96&crop=121,35,1267,1267&ava=1" 
-            class="rounded-circle img-fluid" alt="{{ leader.first_name}} {{ leader.last_name }}">
+            class="rounded-circle img-fluid" alt="{{ leader.user.first_name}} {{ leader.user.last_name }}">
             </div>
         </div>
-        <h1 class="name">{{ leader.first_name}} {{ leader.last_name }}</h1>
+        <h1 class="name">{{ leader.user.first_name}} {{ leader.user.last_name }}</h1>
         <h3 class="tagline">5ПР, 4ГУ [TODO]</h3>
 
         <ul class="list-unstyled contact-list">
-            <li class="email"><i class="fa-solid fa-envelope"></i><a href="mailto: {{ leader.email }}">{{ leader.email }}</a></li>
-            {% if leader.profile.phone_mobile is not None %}
-            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.profile.phone_mobile }}">{{ leader.profile.phone_mobile }}</a></li>
+            <li class="email"><i class="fa-solid fa-envelope"></i><a href="mailto: {{ leader.user.email }}">{{ leader.user.email }}</a></li>
+            {% if leader.phone_mobile is not None %}
+            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.phone_mobile }}">{{ leader.phone_mobile }}</a></li>
             {% endif %}
-            {% if leader.profile.phone_home is not None %}
-            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.profile.phone_home }}">{{ leader.profile.phone_home }}</a></li>
+            {% if leader.phone_home is not None %}
+            <li class="phone"><i class="fa-solid fa-phone"></i><a href="tel:{{ leader.phone_home }}">{{ leader.phone_home }}</a></li>
             {% endif %}
         </ul>
 
         {% if user.id == leader.id %}
-        <a href="{% url 'hike_edit' hike.pk %}" class="btn btn-primary">
-            Редактировать
-        </a>
+        <p>            
+            <a href="{% url 'hike_edit' hike.pk %}" class="btn btn-primary">
+                Редактировать
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'hike_delete' hike.pk %}" class="btn btn-danger">
+                Удалить поход
+            </a>
+        </p>
         {% endif %}
     </div>
 </div>

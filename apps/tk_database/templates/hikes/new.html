@@ -1,12 +1,9 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block page_content %}
 <h2>Добавить поход</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Добавить">
-</form>
+{% crispy form %}
 {% endblock %}

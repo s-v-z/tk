@@ -136,7 +136,14 @@ a.desc:after {
     bottom: 0;
     z-index: 100000;
     text-align: center;
+    transform: translateZ(0);
     -webkit-transform: translateZ(0);
     padding: 10px;
 
+}
+
+.requiredField .asteriskField {
+    color: red;
+    font-weight: bold;
+    margin-left: .25em;
 }

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block page_content %}
+<h2 class="text-danger">Удалить  поход?</h2>
+<h3>{{hike.type}}: {{ hike.title }}</h3>
+<p>Поход будет удалён, а группа распущена. <br/>
+Если Вы хотите скрыть поход из списка походов, установите соответствующую галку на <a href="{% url 'hike_edit' hike.id %}">странице редактирования похода.</a></p>
+
+<p>Чтобы удалить поход, напишите <strong>удалить поход</strong> в поле ниже.</p>
+
+<form method="post"">
+    {% csrf_token %}
+    {{ form.confirmation|as_crispy_field }}
+    <button class="btn btn-danger" type="submit" value="delete"">
+        <i class="fa fa-trash-o"></i>
+        Удалить
+    </button>
+    <a href="javascript:history.back()" class="btn btn-light">
+        Не хочу удалять
+    </a>
+</form>
+{% endblock %}
