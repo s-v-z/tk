@@ -2,12 +2,18 @@ from django.urls import path
 from apps.tk_database import views
 
 urlpatterns = [
-    path("", views.hikes_list, name="hikes_list"),
+    path("", views.tk_home, name="tk_home"),
+
+    path("user/list", views.users_list, name="users_list"),
+    path("user/<int:user_id>/show", views.user_show, name="user_show"),
     path("user/<int:user_id>/announcements", views.user_announcements, name="user_announcements"),
     path("user/<int:user_id>/hikes", views.user_hikes, name="user_hikes"),
-    
+
+    path("hike/list", views.hikes_list, name="hikes_list"),
     path("hike/new", views.CreateHikeView.as_view(), name="hike_new"),
     path("hike/<int:hike_id>/", views.hike_show, name="hike_show"),
     path("hike/<int:hike_id>/edit", views.UpdateHikeView.as_view(), name="hike_edit"),
     path("hike/<int:hike_id>/delete", views.DeleteHikeView.as_view(), name="hike_delete"),
+
+    path("report/list", views.reports_list, name="reports_list")
 ]

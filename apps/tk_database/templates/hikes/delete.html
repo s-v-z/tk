@@ -4,7 +4,37 @@
 
 {% block page_content %}
 <h2 class="text-danger">Удалить  поход?</h2>
-<strong>TODO: добавить отображение параметров похода</strong>
+
+<div class="summary">
+    <table class="table table-sm table-borderless w-auto">
+      <tbody>
+        <tr>
+          <td>Название группы:</td>
+          <td>{{ hike.title}}</td>
+        </tr>
+        <tr>
+          <td>Вид похода:</td>
+          <td>{{ hike.type}}</td>
+        </tr>
+        <tr>
+          <td>Категория похода:</td>
+          <td>{{ hike.category}}</td>
+        </tr>
+        <tr>
+          <td>Район:</td>
+          <td>{{ hike.region }}</td>
+        </tr>
+        <tr>
+          <td>Сроки:</td>
+          <td>{{ hike.start_date }} - {{ hike.end_date}}</td>
+        </tr>
+        <tr>
+          <td>Маршрут:</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
 <p>Поход будет удалён, а группа распущена. <br/>

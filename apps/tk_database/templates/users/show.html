@@ -1,42 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}{{hike.title}}{% endblock %}
+{% block page_title %}{{profile.user.last_name}} {{profile.user.first_name}}{% endblock %}
 
 {% block page_content %}
 <div class="row">
   <div class="column left col-xl-9 pe-4">
     <div class="bdr-round shadow-sm bg-white p-4">
       <section class="section summary-section">
-        <h3 class="section-title">О походе</h3>    
-        <!-- <ul class="nav">
-          <li class="nav-items">
-            Вид похода: {{ hike.type}}
-          </li>
-        </ul> -->
+        <h3 class="section-title">Информация</h3>    
         <div class="summary">
           <table class="table table-sm table-borderless w-auto">
             <tbody>
               <tr>
-                <td>Вид похода:</td>
+                <td>Дата рождения:</td>
                 <td>{{ hike.type}}</td>
               </tr>
               <tr>
-                <td>Категория похода:</td>
+                <td>Телефон:</td>
                 <td>{{ hike.category}}</td>
               </tr>
               <tr>
-                <td>Район:</td>
+                <td>E-mail:</td>
                 <td>{{ hike.region }}</td>
               </tr>
               <tr>
-                <td>Сроки:</td>
+                <td>Разряд:</td>
                 <td>{{ hike.start_date }} - {{ hike.end_date}}</td>
-              </tr>
-              <tr>
-                <td>Маршрут:</td>
-                <td></td>
-              </tr>
+              </tr>              
             </tbody>
           </table>
         </div>
@@ -44,7 +35,7 @@
       </section>
 
       <section class="section summary-section">
-        <h3 class="section-title">Описание</h3>
+        <h3 class="section-title">Походы</h3>
         <div class="summary">
           {{ hike.description }}
         </div><!--//summary-->

@@ -1,16 +1,11 @@
 {% load static %}
 
-<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
-<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/static/assets/css/site.css">
-<link rel="shortcut icon" href="/static/assets/favicon.png"/>
+{% include "includes/styles.html" %}
 
 <div class="wrap">
   <nav class="navbar navbar-light navbar-expand-lg bg-light">
       <div class="container">
-          <a class="navbar-brand" href="{% url 'hikes_list' %}">Турклуб АЗАЗА</a>
+          <a class="navbar-brand" href="{% url 'tk_home' %}">Турклуб АЗАЗА</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -21,62 +16,101 @@
                 <a class="nav-link" href="{% url 'hikes_list' %}">Походы</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'hikes_list' %}">Люди</a>
+                <a class="nav-link" href="{% url 'users_list' %}">Люди</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{#% url 'blog_index' %}">Библиотека</a>
+                <a class="nav-link" href="{% url 'reports_list' %}">Отчёты</a>
               </li>
-            </ul>            
+            </ul>
           </div>
 
-          <div class="collapse navbar-collapse navbar-left" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse navbar-end" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'hikes_list' %}">Походы</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'hikes_list' %}">Люди</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>  Выход</a>
+                {% if user.is_authenticated  %}
+                  <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>  Выход</a>
+                {% else %}
+                  <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i>  Вход</a>
+                {% endif %}
               </li>
             </ul>            
           </div>
       </div>
   </nav>
 
-  <div class="container">
+  <main class="container">
     <div class="row">
-      <div class="column left col-md-2">
-        <p><a href="/user/{{ user.id }}">Моя страница</a>                
-          <a class="no_underline" href="/user/update"><span class="small"><i class="fa-0.5x icon-cog" style="color: #DDD;"></i> </span></a>
-        </p>
-        <p><a href="/user/{{ user.id }}/announcements">Мои объявления</a></p>
-        <p><a href="/user/{{ user.id }}/hikes">Мои походы</a></p>
-        
-        <p>
-          <a href="{% url 'hike_new' %}" class="btn btn-primary">
-            Добавить поход
-          </a>
-        </p>
-      </div>
+      {% if user.is_authenticated  %}
+      <div class="column sidebar-left col-xl-3">        
+        <div class="shadow-sm p-4 bg-white navbar-vertical">
+          <div class="sidebar-menu">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'user_show' user.id %}">
+                  <i class="fa-solid fa-user"></i>
+                  <span class="nav-link-text ms-1">Моя страница</span>
+                  </a>
+              </li>
+              <li>
+                <a class="nav-link" href="/user/{{ user.id }}/announcements">
+                  <i class="fa-solid fa-scroll"></i>
+                  <span class="nav-link-text ms-1">Мои объявления</span>
+                  </a>
+              </li>
+              <li>
+                <a class="nav-link" href="/user/{{ user.id }}/hikes">
+                  <i class="fa-solid fa-mountain-sun"></i>
+                  <span class="nav-link-text ms-1">Мои походы</span>
+                </a>
+              </li>
+            </ul>             
+          </div>
+          <div class="card mt-5">          
+            <div class="card-body">              
+              <h6 class="card-title text-center">Зовут приключения?</h6>
+              <p>
+                <a href="{% url 'hike_new' %}" class="btn btn-primary">
+                  Добавить поход
+                </a>
+              </p>
+            </div>
+          </div>          
+        </div>        
 
-      <div class="column main col-md-10">
+        <div class="bottom-left-image d-md-flex justify-content-center mt-4 p-4">
+          <div>
+            <img class="img-fluid" src="/static/assets/img/template/compass_cat.png" alt="compass cat"/>
+          </div>
+        </div>
+      </div>      
+      <div class="column main col-xl-9">
+      {% else %}
+        <div class="column main col-xl-12">
+      {% endif %}
+
+        <h2 class="page-title">{% block page_title %}{% endblock %}</h2>
         {% block page_content %}{% endblock %}
       </div>
     </div>
-  </div>
+  </main>
 </div>
 
-<footer class="footer">
-  <div class="container">      
-      <p class="pull-left links">
-          <a href="/contact" class="pl-1">Контакты</a>
-          <a href="/page/about" class="pl-1">О клубе</a>
-          <a href="/page/useful" class="pl-1">Полезное</a>
-          <!-- <p class="pull-right">© 2022 <a href="/user/...">Сергей Загориняк</a><br> -->
-      </p>
-  </div>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-light">
+  <div class="container d-flex flex-wrap justify-content-center align-items-center px-4">
+      <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+          <i class="fa-regular fa-mountain-sun"></i>
+        </a>
+        <span class="text-muted">© 2022 svz</span>
+      </div>
+  
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"><a class="text-muted" href="/contact">Контакты</a></li>
+        <li class="ms-3"><a class="text-muted" href="/page/about">О клубе</a></li>
+        <li class="ms-3"><a class="text-muted" href="/page/useful">Полезное</a></li>
+      </ul>      
+    
+    </div>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

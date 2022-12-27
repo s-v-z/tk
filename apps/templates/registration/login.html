@@ -1,19 +1,13 @@
 {% load static %}
 
-<link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/static/assets/css/site.css">
-<link rel="shortcut icon" href="/static/assets/favicon.png" />
+{% include "includes/styles.html" %}
 
-<div class="wrap">
+<div style="background-color: white;">
   <section class="vh-100">
     <div class="container py-5 h-100">
       <div class="row d-flex align-items-center justify-content-center h-100">
         <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="/static/assets/img/template/login_cat.png" class="img-fluid"
-            alt="Phone image">
+          <img src="/static/assets/img/template/login_cat.png" class="img-fluid" alt="Phone image">
         </div>
         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
           <form method="post" action="{% url 'login' %}">

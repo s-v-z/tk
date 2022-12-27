@@ -91,9 +91,46 @@ class DeleteHikeView(DeleteView):
     def form_valid(self, form):
         if self.request.user.id != self.object.leader.id:
             raise PermissionDenied("Вы не можете удалить чужой поход")
-        
+
         success_url = reverse('hikes_list')
         self.object.is_deleted = True
         self.object.members_set = []
         self.object.save()
         return HttpResponseRedirect(success_url)
+
+# --------- USERS -----------
+
+def users_list(request):
+    # TODO: add pagination, add query filters
+    profiles = UserProfile.objects.order_by('user__last_name').select_related("user").all
+
+    context = {
+        'profiles': profiles
+    }
+    return render(request, 'users/list.html', context)
+
+def user_show(request, user_id):
+    profile = UserProfile.objects.select_related("user").get(user__id = user_id)
+    context = {
+        'profile': profile
+    }
+    return render(request, 'users/show.html', context)
+
+
+# --------- REPORTS -----------
+
+def reports_list(request):
+    # TODO: add pagination, add query filters
+    profiles = UserProfile.objects.order_by('user__last_name').select_related("user").all
+    context = {
+        'profiles': profiles
+    }
+    return render(request, 'reports/list.html', context)
+
+# --------- HOME -----------
+
+def tk_home(request):
+    context = {
+        'events': []
+    }
+    return render(request, 'home/index.html', context)
