@@ -3,7 +3,7 @@ from django.forms import ModelForm, Form, CharField
 from django.forms.widgets import DateInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from apps.tk_database.models import Hike
+from apps.tk_database.models import Hike, HikeReport
 
 class HikeForm(ModelForm):
     class Meta:
@@ -44,6 +44,38 @@ class HikeForm(ModelForm):
 
         self.helper.form_id = f"id-hike-{action}-form"
         self.helper.form_class = f"hike-{action}-class"
+        self.helper.attrs = {"novalidate": ''}
+
+        self.helper.add_input(Submit('submit', submit_label))
+
+class HikeReportForm(ModelForm):
+    class Meta:
+        model = HikeReport
+        fields = [  'hike', 'actual_start_date', 'actual_end_date', 'actual_path', 'report_file', 'report_url']
+
+        widgets = {
+            # TODO: разобраться с форматом даты в инпуте. сейчас он почему-то игнорируется.
+            'actual_start_date': DateInput(format='%Y-%m-%d', attrs={'class':'form-control', 'placeholder':'Выберите дату', 'type':'date'}),
+            'actual_end_date': DateInput(format='%Y-%m-%d', attrs={'class':'form-control', 'placeholder':'Выберите дату', 'type':'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):        
+        submit_label = kwargs.pop('submit_label', 'Сохранить')
+
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.fields['hike'].label = 'Поход'
+        self.fields['actual_start_date'].label = 'Факт. дата начала'
+        self.fields['actual_end_date'].label = 'Факт. дата окончания'
+        self.fields['actual_path'].label = 'Фактический маршрут'
+        self.fields['report_file'].label = 'Файл отчёта'
+        self.fields['report_url'].label = 'Сылка на отчёт'
+
+        for field in self.fields.values():
+            if field.required:
+                field.error_messages = {'required': 'Это поле обязательное'}
+
         self.helper.attrs = {"novalidate": ''}
 
         self.helper.add_input(Submit('submit', submit_label))

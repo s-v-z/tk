@@ -14,6 +14,14 @@ urlpatterns = [
     path("hike/<int:hike_id>/", views.hike_show, name="hike_show"),
     path("hike/<int:hike_id>/edit", views.UpdateHikeView.as_view(), name="hike_edit"),
     path("hike/<int:hike_id>/delete", views.DeleteHikeView.as_view(), name="hike_delete"),
+    path("hike/<int:hike_id>/close", views.hike_close, name="hike_close"),
+
+
+    path("hike/report/list", views.reports_list, name="reports_list"),
+    path("hike/<int:hike_id>/report/new", views.CreateReportView.as_view(), name="report_new"),
+    path("hike/<int:hike_id>/report/", views.report_show, name="report_show"),
+    path("hike/<int:hike_id>/report/edit", views.report_edit, name="report_edit"),
+    path("hike/<int:hike_id>/report/delete", views.report_edit, name="report_delete"),
 
     path("report/list", views.reports_list, name="reports_list")
 ]

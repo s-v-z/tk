@@ -1,20 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block page_title %}
-{{hike.title}}
-{% if hike.is_completed %}
-  [ЗАВЕРШЁН]
-{% endif%}
-
-{% endblock %}
+{% block page_title %}Отчёт о походе: {{hike.title}}{% endblock %}
 
 {% block page_content %}
 <div class="row">
   <div class="column left col-xl-9 pe-4">
     <div class="bdr-round shadow-sm bg-white p-4">
       <section class="section summary-section">
-        <h3 class="section-title">О походе</h3>
+        <h3 class="section-title">О походе</h3>      
         <div class="summary">
           <table class="table table-sm table-borderless w-auto">
             <tbody>
@@ -76,28 +70,13 @@
     {% if user.id == leader.id %}
     <div class="hike-controls px-4">
       <p>
-        <a href="{% url 'hike_edit' hike.pk %}" class="btn btn-primary d-block">
+        <a href="{% url 'report_edit' hike.pk %}" class="btn btn-primary d-block">
           Редактировать
         </a>
-      </p>
+      </p>      
       <p>
-        {% if not hike.is_completed %}
-        <a href="{% url 'hike_close' hike.pk %}" class="btn btn-light d-block">
-          Завершить
-        </a>
-        {% elif not report %}
-        <a href="{% url 'report_new' hike.pk %}" class="btn btn-light d-block">
-          Добавить отчёт
-        </a>
-        {% else %}
-        <a href="{% url 'report_edit' hike.pk %}" class="btn btn-light d-block">
-          Редактировать отчёт
-        </a>
-        {% endif %}
-      </p>
-      <p>
-        <a href="{% url 'hike_delete' hike.pk %}" class="btn btn-danger d-block">
-          Удалить поход
+        <a href="{% url 'report_delete' hike.pk %}" class="btn btn-danger d-block">
+          Удалить отчёт
         </a>
       </p>
     </div>

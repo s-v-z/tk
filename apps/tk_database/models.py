@@ -102,7 +102,7 @@ class Hike(models.Model):
     objects_all = models.Manager()
 
     def __str__(self):
-        return self.type.name + ' ' + str(self.category) + ' ' + self.region.name + ' ' + self.title
+        return str(self.type) + ' ' + str(self.category) + ' ' + str(self.region) + ' ' + self.title
 
 
 class HikeMember(models.Model):
@@ -112,9 +112,16 @@ class HikeMember(models.Model):
 
 
 class HikeReport(models.Model):
-    hike              = models.ForeignKey(Hike, null=False, on_delete=models.CASCADE)
+    hike              = models.ForeignKey(Hike, null=False, unique=True, on_delete=models.RESTRICT)
     actual_start_date = models.DateField()
     actual_end_date   = models.DateField()
     actual_path       = models.TextField()
-    report_file       = models.FilePathField(path="/report")
+    report_file       = models.FilePathField(path="/")
     report_url        = models.URLField()
+    is_deleted        = models.BooleanField(default=False)
+
+    objects = ModelActiveManager()
+    objects_all = models.Manager()
+
+    def __str__(self):
+        return 'Отчёт: ' + str(self.hike)

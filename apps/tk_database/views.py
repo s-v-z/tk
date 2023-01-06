@@ -1,13 +1,14 @@
 import logging
 from itertools import groupby
+from functools import lru_cache
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.db.models import Q
-from apps.tk_database.models import Hike, UserProfile
-from apps.tk_database.forms import HikeForm, DeleteConfirmationForm
+from apps.tk_database.models import Hike, HikeReport, UserProfile
+from apps.tk_database.forms import HikeForm, HikeReportForm, DeleteConfirmationForm
 
 
 log = logging.getLogger(__name__)
@@ -31,6 +32,7 @@ def user_announcements(request, user_id):
     return render(request, 'hikes/list.html', context)
 
 
+# @lru_cache(maxsize=2048) TODO: enable later
 def hikes_list(request):
     # TODO: add pagination, add query filters
     hikes = Hike.objects.order_by('category','start_date').select_related('leader').all()
@@ -43,14 +45,27 @@ def hikes_list(request):
 
 def hike_show(request, hike_id):
     hike = Hike.objects.select_related("region", "type").get(pk=hike_id)
+    report = HikeReport.objects.filter(hike_id=hike_id)
     leader = UserProfile.objects.select_related("user").get(user__id = hike.leader_id)
 
     log.debug('leader: %s', leader)
     context = {
         'hike': hike,
+        'report': report,
         'leader': leader
     }
     return render(request, 'hikes/show.html', context)
+
+# TODO: use Ninja REST
+def hike_close(request, hike_id):
+    hike = Hike.objects.select_related("region", "type").get(pk=hike_id)    
+
+    if hike.leader_id != request.user.id:
+        raise PermissionDenied('Нельзя изменить чужой поход')
+
+    hike.is_completed = True
+    hike.save()
+    return redirect(reverse('hike_show', kwargs={'hike_id' : hike_id}))
 
 
 class CreateHikeView(CreateView):
@@ -121,11 +136,46 @@ def user_show(request, user_id):
 
 def reports_list(request):
     # TODO: add pagination, add query filters
-    profiles = UserProfile.objects.order_by('user__last_name').select_related("user").all
+    reports = HikeReport.objects.order_by('actual_start_date').select_related('hike').all()
+
     context = {
-        'profiles': profiles
+        'reports': reports
     }
     return render(request, 'reports/list.html', context)
+
+
+def report_show(request, hike_id):
+    report = HikeReport.objects.filter(hike_id=hike_id).select_related("hike").first()
+    hike = report.hike
+    leader = UserProfile.objects.select_related("user").get(user__id = report.hike.leader_id)
+
+    log.debug('leader: %s', leader)
+    context = {
+        'report': report,
+        'hike': hike,
+        'leader': leader
+    }
+    return render(request, 'reports/show.html', context)
+
+def report_edit(request, hike_id):
+    return render(request, 'reports/edit.html')
+
+def report_delete(request, hike_id):
+    return render(request, 'reports/delete.html')
+
+class CreateReportView(CreateView):
+    model = Hike
+    form_class = HikeReportForm
+    template_name='reports/new.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(CreateReportView, self).get_form_kwargs()
+        # kwargs['action'] = 'new'
+        kwargs['submit_label'] = 'Добавить отчёт'
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('report_show', kwargs={'hike_id' : self.object.hike_id})
 
 # --------- HOME -----------
 

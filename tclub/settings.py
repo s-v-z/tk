@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-l#vlhhc=*h#dts-&#u_n#x3dy))zq-dg2#hpkf5+jwb(%0j9zm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGGING = {
     'version': 1,
@@ -76,8 +76,8 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     'crispy_bootstrap5',
+    'schedule',
     'apps.tk_database',
-    'apps.tk_calendar',
 ]
 
 MIDDLEWARE = [
@@ -107,6 +107,8 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = ["django.template.context_processors.request"]
 CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'bootstrap5')
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 

@@ -4,9 +4,7 @@
 {% block page_title %}Отчёты{% endblock %}
 
 {% block page_content %}
-<div class="table-responsive-md bdr-round shadow-sm bg-white">
-    <p>Здесь пока ничего нет, но будет страница с отчётами</p>
-
+<div class="table-responsive-md bdr-round shadow-sm bg-white">    
     <table class="table table-hover padded">
         <thead>
           <tr>
@@ -19,24 +17,19 @@
           </tr>
         </thead>
         <tbody>
-            {% for key, group in grouped_hikes %}
-              <tr>
-                <th scope="row" colspan="6" class="text-center table-divider">{{ key }} к/с</th>                
-              </tr>
-              {% for hike in group %}
+            {% for report in reports %}              
                 <tr>
-                    <td>{{ hike.leader.last_name }} {{ hike.leader.first_name }}</td>
-                    <td>{{ hike.type }}</td>
-                    <td>{{ hike.region }}</td>
-                    <td>{{ hike.start_date }}</td>
+                    <td>{{ report.hike.leader.last_name }} {{ report.hike.leader.first_name }}</td>
+                    <td>{{ report.hike.type }}</td>
+                    <td>{{ report.hike.region }}</td>
+                    <td>{{ report.hike.start_date }}</td>
                     <td>-</td>
                     <td>
-                        <a href="{% url 'hike_show' hike.pk %}" class="btn btn-light">
+                        <a href="{% url 'report_show' report.hike_id %}" class="btn btn-light">
                             Подробнее
                         </a>
                     </td>
-                </tr>
-              {% endfor %}
+                </tr>              
             {% endfor %}
         </tbody>
     </table>

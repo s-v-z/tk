@@ -181,6 +181,7 @@ a.desc:after {
     height: 150px;
     width: 150px;
     position: relative;
+    margin: auto;
 }
 
 .avatar {
@@ -233,4 +234,39 @@ a.desc:after {
 .icon-shape .ni {
     top: 14px;
     position: relative;
+}
+
+.card-img-right {
+    background-size: cover;
+    border-radius: 0.75rem;
+    height: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.mask {
+    position: absolute;
+    background-size: cover;
+    background-position: center center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.bg-gradient-dark {
+    background-image: linear-gradient(310deg, #6e6e6e 0%, #aaaaaa 100%);
+}
+
+.border-radius-lg {
+    border-radius: 0.75rem;
+}
+
+.text-white {
+    color: #fff !important;
+}
+
+.text-light {
+    color: rgb(192, 192, 192) !important;
 }
