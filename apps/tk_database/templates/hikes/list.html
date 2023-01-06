@@ -3,6 +3,10 @@
 
 {% block page_title %}Походы{% endblock %}
 
+{% block left_menu_img %}
+  <img class="img-fluid" src="/static/assets/img/template/backpack_cat.png" alt="backpack cat"/>
+{% endblock %}
+
 {% block page_content %}
 <div class="table-responsive-md bdr-round shadow-sm bg-white">
     <table class="table table-hover padded">
@@ -29,7 +33,7 @@
                     <td>{{ hike.start_date }}</td>
                     <td>-</td>
                     <td>
-                        <a href="{% url 'hike_show' hike.pk %}" class="btn btn-light">
+                        <a href="{% url 'hike_show' hike.pk %}" class="btn btn-light btn-sm">
                             Подробнее
                         </a>
                     </td>

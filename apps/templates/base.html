@@ -72,15 +72,14 @@
                 <a href="{% url 'hike_new' %}" class="btn btn-primary">
                   Добавить поход
                 </a>
-              </p>
+              </p>              
             </div>
           </div>          
-        </div>        
+        </div>    
 
-        <div class="bottom-left-image d-md-flex justify-content-center mt-4 p-4">
-          
-            <img class="img-fluid" src="/static/assets/img/template/compass_cat.png" alt="compass cat"/>
-          
+        <div class="bottom-left-image d-md-flex justify-content-center mt-4">          
+            {% block left_menu_img %}
+            {% endblock %}
         </div>
       </div>      
       <div class="column main col-xl-9">
