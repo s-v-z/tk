@@ -19,6 +19,7 @@ class HikeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         action = kwargs.pop('action', None)
         submit_label = kwargs.pop('submit_label', 'Сохранить')
+        leader = kwargs.pop('leader', None)
 
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

@@ -5,6 +5,7 @@
 {% block page_content %}
 <h2 class="text-danger">Удалить поход?</h2>
 
+<div class="bdr-round shadow-sm bg-white p-4">
 <div class="summary">
     <table class="table table-sm table-borderless w-auto">
       <tbody>
@@ -49,8 +50,9 @@
         <i class="fa fa-trash-o"></i>
         Удалить
     </button>
-    <a href="javascript:history.back()" class="btn btn-light">
+    <a href="{% url 'hike_show' hike.id %}" class="btn btn-light">
         Не хочу удалять
     </a>
 </form>
+</div>
 {% endblock %}

@@ -58,7 +58,7 @@ def hike_show(request, hike_id):
 
 # TODO: use Ninja REST
 def hike_close(request, hike_id):
-    hike = Hike.objects.select_related("region", "type").get(pk=hike_id)    
+    hike = Hike.objects.select_related("region", "type").get(pk=hike_id)
 
     if hike.leader_id != request.user.id:
         raise PermissionDenied('Нельзя изменить чужой поход')
@@ -73,9 +73,14 @@ class CreateHikeView(CreateView):
     form_class = HikeForm
     template_name='hikes/new.html'
 
+    def form_valid(self, form):
+        form.instance.leader = self.request.user
+        return super(CreateHikeView, self).form_valid(form)
+
     def get_form_kwargs(self):
         kwargs = super(CreateHikeView, self).get_form_kwargs()
         kwargs['action'] = 'new'
+        kwargs['leader'] = self.request.user
         kwargs['submit_label'] = 'Создать поход'
         return kwargs
 
@@ -177,10 +182,25 @@ class CreateReportView(CreateView):
     def get_success_url(self):
         return reverse('report_show', kwargs={'hike_id' : self.object.hike_id})
 
+
+# --------- EVENTS -----------
+def events_list(request):    
+    return render(request, 'events/list.html')
+
 # --------- HOME -----------
 
 def tk_home(request):
+    hikes_total_count = Hike.objects.count()
+    hikes_open_count = Hike.objects.filter(is_completed=False).count()
+    users_count = UserProfile.objects.count()
+
+
     context = {
+        'stats' : {
+            'hikes_total': hikes_total_count,
+            'hikes_active': hikes_open_count,
+            'users_count': users_count
+        },
         'events': []
     }
     return render(request, 'home/index.html', context)

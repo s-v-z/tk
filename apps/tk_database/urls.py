@@ -1,5 +1,7 @@
 from django.urls import path
+from django.views.generic.base import TemplateView
 from apps.tk_database import views
+
 
 urlpatterns = [
     path("", views.tk_home, name="tk_home"),
@@ -23,5 +25,9 @@ urlpatterns = [
     path("hike/<int:hike_id>/report/edit", views.report_edit, name="report_edit"),
     path("hike/<int:hike_id>/report/delete", views.report_edit, name="report_delete"),
 
-    path("report/list", views.reports_list, name="reports_list")
+    path("report/list", views.reports_list, name="reports_list"),
+    path("event/list", views.events_list, name="events_list"),
+    
+    path("about/club", TemplateView.as_view(template_name='about/club.html'), name="about_club"),
+    path("about/training", TemplateView.as_view(template_name='about/training.html'), name="about_training"),
 ]

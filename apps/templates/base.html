@@ -5,7 +5,7 @@
 <div class="wrap">
   <nav class="navbar navbar-light navbar-expand-lg bg-light">
       <div class="container">
-          <a class="navbar-brand" href="{% url 'tk_home' %}">Турклуб АЗАЗА</a>
+          <a class="navbar-brand" href="{% url 'tk_home' %}">Турклуб МГУ</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -13,7 +13,10 @@
           <div class="collapse navbar-collapse navbar-left" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'hikes_list' %}">Походы</a>
+                <a class="nav-link fw-bolder" href="{% url 'hikes_list' %}">Походы</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'events_list' %}">Мероприятия</a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'users_list' %}">Люди</a>
@@ -28,9 +31,9 @@
             <ul class="navbar-nav ms-auto">
               <li class="nav-item active">
                 {% if user.is_authenticated  %}
-                  <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>  Выход</a>
+                  <a class="nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>  Выйти</a>
                 {% else %}
-                  <a class="nav-link" href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i>  Вход</a>
+                  <a class="nav-link" href="{% url 'login' %}">Войти  <i class="fa-solid fa-right-to-bracket"></i></a>
                 {% endif %}
               </li>
             </ul>            
@@ -67,15 +70,26 @@
           </div>
           <div class="card mt-5">          
             <div class="card-body">              
-              <h6 class="card-title text-center">Зовут приключения?</h6>
+              <h6 class="card-title text-center">Чего-то не хватает?</h6>
               <p>
-                <a href="{% url 'hike_new' %}" class="btn btn-primary">
-                  Добавить поход
-                </a>
+                <div class="dropdown mx-auto">
+                  <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Добавить
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'hike_new' %}">Поход</a></li>
+                    <li><a class="dropdown-item" href="#">Мероприятие</a></li>
+                    <li><a class="dropdown-item" href="#">Отчет</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Учётную запись</a></li>
+                  </ul>
+                </div>
               </p>              
             </div>
           </div>          
         </div>    
+
+        
 
         <div class="bottom-left-image d-md-flex justify-content-center mt-4">          
             {% block left_menu_img %}
@@ -97,7 +111,7 @@
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-light">
   <div class="container d-flex flex-wrap justify-content-center align-items-center px-4">
       <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <a href="https://github.com/s-v-z/tk" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
           <i class="fa-regular fa-mountain-sun"></i>
         </a>
         <span class="text-muted">© 2022 svz</span>
@@ -105,12 +119,11 @@
   
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
         <li class="ms-3"><a class="text-muted" href="/contact">Контакты</a></li>
-        <li class="ms-3"><a class="text-muted" href="/page/about">О клубе</a></li>
+        <li class="ms-3"><a class="text-muted" href="{% url 'about_club'%}">О клубе</a></li>
         <li class="ms-3"><a class="text-muted" href="/page/useful">Полезное</a></li>
       </ul>      
     
     </div>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+{% include "includes/scripts.html" %}
