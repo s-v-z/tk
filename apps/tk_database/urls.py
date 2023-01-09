@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 from apps.tk_database import views
 
 
+
 urlpatterns = [
     path("", views.tk_home, name="tk_home"),
 
@@ -30,4 +31,8 @@ urlpatterns = [
     
     path("about/club", TemplateView.as_view(template_name='about/club.html'), name="about_club"),
     path("about/training", TemplateView.as_view(template_name='about/training.html'), name="about_training"),
+
+    path("event/list/json", views.events_json, name="events_json"),
+    path("event/daily/<str:day>/json", views.events_json, name="events_json"),
+    path("event/<int:event_id>/json", views.event_json, name="event_json")
 ]

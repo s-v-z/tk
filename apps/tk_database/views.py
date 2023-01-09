@@ -1,13 +1,15 @@
 import logging
 from itertools import groupby
+from datetime import datetime
 from functools import lru_cache
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.db.models import Q
-from apps.tk_database.models import Hike, HikeReport, UserProfile
+from apps.tk_database.models import Hike, HikeReport, UserProfile, CalendarEvent
 from apps.tk_database.forms import HikeForm, HikeReportForm, DeleteConfirmationForm
 
 
@@ -204,3 +206,60 @@ def tk_home(request):
         'events': []
     }
     return render(request, 'home/index.html', context)
+
+
+# --------- CALENDAR -----------
+
+# TODO: replace with Ninja API
+def events_json(request):
+    start_str = request.GET.get('start','')
+    end_str = request.GET.get('end','')
+
+    start = datetime.strptime(start_str, '%Y-%m-%dT%H:%M:%S%z')
+    end = datetime.strptime(end_str, '%Y-%m-%dT%H:%M:%S%z')
+
+    events = CalendarEvent.objects.filter(start_dt__gte=start, start_dt__lte=end).all()
+
+    response = []
+
+    for event in events:
+        evt = {}
+        evt['id']= event.pk
+        evt['title'] = event.title
+        evt['description'] = event.description
+        evt['start'] = event.start_dt
+        evt['end'] = event.end_dt
+        response.append(evt)
+
+    return JsonResponse(response, safe=False)
+
+def event_json(request, event_id):
+    event = CalendarEvent.objects.get(pk=event_id)
+
+    evt = {}
+    evt['id']= event.pk
+    evt['title'] = event.title
+    evt['description'] = event.description
+    evt['start'] = event.start_dt
+    evt['end'] = event.end_dt    
+
+    return JsonResponse(evt, safe=False)
+
+# TODO: replace with Ninja API
+def events_daily_json(request, day):
+    evt_date = datetime.strptime(day, '%Y-%m-%d')
+    
+    events = CalendarEvent.objects.filter(start_dt__gte=evt_date, start_dt__lte=evt_date).all()
+
+    response = []
+
+    for event in events:
+        evt = {}
+        evt['id']= event.pk
+        evt['title'] = event.title
+        evt['description'] = event.description
+        evt['start'] = event.start_dt
+        evt['end'] = event.end_dt
+        response.append(evt)
+
+    return JsonResponse(response, safe=False)

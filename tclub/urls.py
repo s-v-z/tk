@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('user/', include('django.contrib.auth.urls')),
-    path('schedule/', include('schedule.urls')),
+    # path('schedule/', include('schedule.urls')),
     path('calendar/', TemplateView.as_view(template_name="calendar/full.html"), name='fullcalendar'),
     path('admin/', admin.site.urls),
     path('', include('apps.tk_database.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

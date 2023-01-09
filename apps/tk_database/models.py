@@ -125,3 +125,10 @@ class HikeReport(models.Model):
 
     def __str__(self):
         return 'Отчёт: ' + str(self.hike)
+
+
+class CalendarEvent(models.Model):
+    title       = models.CharField(max_length=255)
+    description = models.TextField()
+    start_dt    = models.DateTimeField()
+    end_dt      = models.DateTimeField()

@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     'crispy_bootstrap5',
-    'schedule',
     'apps.tk_database',
 ]
 
@@ -109,7 +108,7 @@ TEMPLATES = [
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = ["django.template.context_processors.request"]
-CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'bootstrap4', 'bootstrap5')
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap5')
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 WSGI_APPLICATION = 'tclub.wsgi.application'
